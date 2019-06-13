@@ -18,14 +18,14 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
     private final Runnable WEATHER_DATA_RUNNABLE = new Runnable() {
         @Override
         public void run() {
-            getWeather(new IoCompletionListener1<Boolean>() {
-                @Override
-                public void onFinish(Boolean data, Object context) {
-                    if (data) {
-                        notifyOb(new Object[]{mWeatherData});
-                    }
-                }
-            });
+//            getWeather(new IoCompletionListener1<Boolean>() {
+//                @Override
+//                public void onFinish(Boolean data, Object context) {
+//                    if (data) {
+//                        notifyOb(new Object[]{mWeatherData});
+//                    }
+//                }
+//            });
 
             UIThreadDispatcher.dispatch(WEATHER_DATA_RUNNABLE, RUNNABLE_TIMER);
         }
