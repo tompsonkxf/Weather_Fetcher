@@ -6,5 +6,4 @@ package com.xixisdk.xixiweatherutils;
 
 public interface XiXiWeatherListener {
     void onWeatherData(WeatherEntity weatherData) ;
-    void onWeatherLifeData(WeatherLifeEntity weatherData) ;
 }

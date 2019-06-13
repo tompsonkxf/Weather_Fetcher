@@ -1,29 +1,30 @@
 package com.xixisdk.xixiweatherutils;
 
-import android.text.TextUtils;
-
 import com.xixi.sdk.parser.LLGsonUtils;
 import com.xixi.sdk.utils.network.LLException;
 import com.xixi.sdk.utils.thread.UIThreadDispatcher;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Administrator on 2019/6/10.
  */
 
-public abstract class CallBackWeather<T extends WeatherResult> implements Callback {
+public abstract class CallBackWeather<T extends WeatherEntity> implements Callback<ResponseBody> {
 
     public CallBackWeather() {
     }
 
     @Override
-    public void onFailure(Call call, IOException e) {
+    public void onFailure(final retrofit2.Call<ResponseBody> arg0, final Throwable arg1) {
+        UIThreadDispatcher.dispatch(new Runnable() {
+            public void run() {
+                onGeneralFailure(arg0, new LLException.LLNetworkException("networkerror"));
+            }
+        }, 1000);
 
     }
 
@@ -47,7 +48,7 @@ public abstract class CallBackWeather<T extends WeatherResult> implements Callba
     }
 
     @Override
-    public void onResponse(final Call arg0, final Response arg1) throws IOException {
+    public void onResponse(final Call<ResponseBody> arg0, final Response<ResponseBody> arg1){
         String strJson = null;
         T o = null;
         ResponseBody res = null;
@@ -63,7 +64,7 @@ public abstract class CallBackWeather<T extends WeatherResult> implements Callba
             }
 
             final T o1 = o;
-            if (TextUtils.isEmpty(o1.getStatus_code())) {
+            if (o1.getData() == null) {
                 throw new LLException.LLCmdErrorException(strJson);
             }
 

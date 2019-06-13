@@ -5,15 +5,22 @@ package com.xixisdk.xixiweatherutils;
  */
 
 public class WeatherResult {
-    private String status ;
+    private String ret;
+    private String msg;
 
-    public String getStatus() {
-        return status;
+    public String getRet() {
+        return ret;
     }
 
-    public String getStatus_code() {
-        return status_code;
+    public void setRet(String ret) {
+        this.ret = ret;
     }
 
-    private  String status_code ;
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }
