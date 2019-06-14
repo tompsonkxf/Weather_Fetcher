@@ -1,12 +1,9 @@
 package com.xixisdk.xixiweatherutils;
 
-import android.util.Log;
-
 import com.xixi.sdk.app.LongLakeApplication;
 import com.xixi.sdk.controller.LLNotifier;
 import com.xixi.sdk.utils.file.IoCompletionListener1;
 import com.xixi.sdk.utils.thread.UIThreadDispatcher;
-import com.xixisdk.xixiosfactory.XiXiOsFactoryUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,14 +21,14 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
     private final Runnable WEATHER_DATA_RUNNABLE = new Runnable() {
         @Override
         public void run() {
-//            getWeather(new IoCompletionListener1<Boolean>() {
-//                @Override
-//                public void onFinish(Boolean data, Object context) {
-//                    if (data) {
-//                        notifyOb(new Object[]{mWeatherData});
-//                    }
-//                }
-//            });
+            getWeather(new IoCompletionListener1<Boolean>() {
+                @Override
+                public void onFinish(Boolean data, Object context) {
+                    if (data) {
+                        notifyOb(new Object[]{mWeatherData});
+                    }
+                }
+            });
 
             UIThreadDispatcher.dispatch(WEATHER_DATA_RUNNABLE, RUNNABLE_TIMER);
         }
