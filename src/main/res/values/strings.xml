@@ -17,6 +17,7 @@
 
     <string name="weather_sunny">晴（国内城市白天晴）</string>
     <string name="weather_clear">晴（国内城市夜晚晴）</string>
+    <string name="weather_nice">晴</string>
     <string name="weather_cloudy">多云</string>
     <string name="weather_partly_cloudy">晴间多云</string>
     <string name="weather_partly_cloudy_night">晴间多云（夜）</string>

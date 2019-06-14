@@ -9,7 +9,7 @@ public class WeatherEntity {
     /**
      * ret : success
      * msg : null
-     * data : {"day":"多云","night":"多云","tempHigh":"30","tempLow":"20","brief":"热","details":"天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"}
+     * data : {"day":"多云","night":"多云","tempHigh":"25","tempLow":"18","brief":"舒适","details":"建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。"}
      */
 
     private String ret;
@@ -44,10 +44,10 @@ public class WeatherEntity {
         /**
          * day : 多云
          * night : 多云
-         * tempHigh : 30
-         * tempLow : 20
-         * brief : 热
-         * details : 天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。
+         * tempHigh : 25
+         * tempLow : 18
+         * brief : 舒适
+         * details : 建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。
          */
 
         private String day;

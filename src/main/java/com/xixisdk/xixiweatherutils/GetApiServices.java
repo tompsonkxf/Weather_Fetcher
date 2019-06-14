@@ -19,18 +19,17 @@ import retrofit2.http.QueryMap;
  */
 
 public class GetApiServices extends LLSdkRetrofitUtils {
-   private static Retrofit retrofit = new Retrofit.Builder().baseUrl("http://39.104.111.137:8080/appreg/device/weather/")
+   private static Retrofit retrofit = new Retrofit.Builder().baseUrl("http://39.104.111.137/appreg/device/weather/")
             .addConverterFactory(GsonConverterFactory.create()).build();
 
 
-    public static Call<ResponseBody> queryWeather(String deviceName, String deviceType, String timestamp) {
-        return retrofit.create(IGetWeather.class).queryWeather(deviceName, deviceType, timestamp);
+    public static Call<ResponseBody> queryWeather(String deviceName, String deviceType) {
+        return retrofit.create(IGetWeather.class).queryWeather(deviceName, deviceType);
     }
 
 
     public interface IGetWeather {
-        @GET("deviceName/{deviceName}/deviceType/{deviceType}/timestamp/{timestamp}")
-        Call<ResponseBody> queryWeather(@Path("deviceName") String deviceName, @Path("deviceType") String deviceType,
-                                      @Path("timestamp") String timestamp);
+        @GET("deviceName/{deviceName}/deviceType/{deviceType}")
+        Call<ResponseBody> queryWeather(@Path("deviceName") String deviceName, @Path("deviceType") String deviceType);
     }
 }

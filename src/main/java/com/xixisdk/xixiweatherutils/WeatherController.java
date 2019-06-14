@@ -1,12 +1,18 @@
 package com.xixisdk.xixiweatherutils;
 
+import android.util.Log;
+
 import com.xixi.sdk.app.LongLakeApplication;
 import com.xixi.sdk.controller.LLNotifier;
 import com.xixi.sdk.utils.file.IoCompletionListener1;
 import com.xixi.sdk.utils.thread.UIThreadDispatcher;
+import com.xixisdk.xixiosfactory.XiXiOsFactoryUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * Created by Administrator on 2019/6/10.
@@ -48,6 +54,7 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
         mLifeMap.put(LongLakeApplication.getInstance().getString(R.string.weather_frigid), LongLakeApplication.getInstance().getString(R.string.weather_frigid_dress));
 
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_sunny), R.mipmap.weather0);
+        mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_nice), R.mipmap.weather0);
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_clear), R.mipmap.weather1);
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_cloudy), R.mipmap.weather4);
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_partly_cloudy), R.mipmap.weather5);
@@ -106,27 +113,32 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
         return instance;
     }
 
-    private String deviceName, timestamp;
+    private static String deviceName;
     private static final String DEVICE_TYPE = "DU";
 
+    public static void setMac(String strMac){
+        deviceName=strMac;
+    }
+
     public void getWeather(final IoCompletionListener1<Boolean> weatherData) {
-//        GetApiServices.queryWeather(deviceName, DEVICE_TYPE, null).enqueue(new CallBackWeather<WeatherEntity>() {
-//
-//            @Override
-//            public Class<WeatherEntity> _getClass() {
-//                return WeatherEntity.class;
-//            }
-//
-//            @Override
-//            public void onLLResponse(Call arg0, Response arg1, WeatherEntity o) {
-//                weatherData.onFinish(true, getWeatherData());
-//            }
-//
-//            @Override
-//            public void onLLFailure(Call arg0, Throwable arg1) {
-//                weatherData.onFinish(false, android.util.Log.getStackTraceString(arg1));
-//            }
-//        });
+        GetApiServices.queryWeather(deviceName, DEVICE_TYPE).enqueue(new CallBackWeather<WeatherEntity>() {
+
+            @Override
+            public Class<WeatherEntity> _getClass() {
+                return WeatherEntity.class;
+            }
+
+            @Override
+            public void onLLResponse(Call arg0, Response arg1, WeatherEntity o) {
+                mWeatherData=o;
+                weatherData.onFinish(true, getWeatherData());
+            }
+
+            @Override
+            public void onLLFailure(Call arg0, Throwable arg1) {
+                weatherData.onFinish(false, android.util.Log.getStackTraceString(arg1));
+            }
+        });
     }
 
     public static class WeatherData {
@@ -134,7 +146,7 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
     }
 
     private WeatherEntity DEFAULT_NULL_WEATHERENTITY = new WeatherEntity();
-    private WeatherEntity mWeatherData = new WeatherEntity();
+    private WeatherEntity mWeatherData;
 
     public WeatherEntity getWeatherData() {
         if (mWeatherData == null) {
