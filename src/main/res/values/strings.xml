@@ -3,9 +3,9 @@
     <string name="weather_scorching_hot">炎热</string>
     <string name="weather_scorching_hot_dress">天气炎热\n注意避暑</string>
     <string name="weather_hot">热</string>
-    <string name="weather_hot_dress">天气热，建议着\n夏装</string>
+    <string name="weather_hot_dress">天气热\n建议着夏装</string>
     <string name="weather_comfortable">舒适</string>
-    <string name="weather_comfortable_dress">天气舒适\n事宜出行</string>
+    <string name="weather_comfortable_dress">天气舒适\n适宜出行</string>
     <string name="weather_more_comfortable">较舒适</string>
     <string name="weather_more_comfortable_dress">天气较舒适\n可以考虑外出</string>
     <string name="weather_colder">较冷</string>
@@ -13,7 +13,7 @@
     <string name="weather_cold">冷</string>
     <string name="weather_cold_dress">天气冷\n注意保暖</string>
     <string name="weather_frigid">寒冷</string>
-    <string name="weather_frigid_dress">天气寒冷,建议\n着冬装</string>
+    <string name="weather_frigid_dress">天气寒冷\n建议着冬装</string>
 
     <string name="weather_sunny">晴（国内城市白天晴）</string>
     <string name="weather_clear">晴（国内城市夜晚晴）</string>
