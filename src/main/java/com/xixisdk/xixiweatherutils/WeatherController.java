@@ -34,6 +34,11 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
         }
     };
 
+    @Override
+    protected boolean dispatchedInMainThread() {
+        return true;
+    }
+
     private WeatherController() {
         WEATHER_DATA_RUNNABLE.run();
     }
