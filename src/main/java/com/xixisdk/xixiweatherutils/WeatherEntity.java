@@ -1,10 +1,13 @@
 package com.xixisdk.xixiweatherutils;
 
+import com.xixi.sdk.app.LongLakeApplication;
+import com.xixi.sdk.utils.network.LLRet;
+
 /**
  * Created by Administrator on 2019/6/5.
  */
 
-public class WeatherEntity {
+public class WeatherEntity extends LLRet {
 
     /**
      * ret : success
@@ -12,17 +15,8 @@ public class WeatherEntity {
      * data : {"day":"多云","night":"多云","tempHigh":"25","tempLow":"18","brief":"舒适","details":"建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。"}
      */
 
-    private String ret;
     private Object msg;
     private DataBean data;
-
-    public String getRet() {
-        return ret;
-    }
-
-    public void setRet(String ret) {
-        this.ret = ret;
-    }
 
     public Object getMsg() {
         return msg;
@@ -74,7 +68,7 @@ public class WeatherEntity {
         }
 
         public String getTempHigh() {
-            return tempHigh;
+            return tempHigh.isEmpty()?LongLakeApplication.getInstance().getString(R.string.weather_temp_high):tempHigh;
         }
 
         public void setTempHigh(String tempHigh) {
@@ -82,7 +76,7 @@ public class WeatherEntity {
         }
 
         public String getTempLow() {
-            return tempLow;
+            return tempLow.isEmpty()? LongLakeApplication.getInstance().getString(R.string.weather_temp_low):tempLow;
         }
 
         public void setTempLow(String tempLow) {

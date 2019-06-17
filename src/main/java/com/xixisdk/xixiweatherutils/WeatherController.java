@@ -1,8 +1,11 @@
 package com.xixisdk.xixiweatherutils;
 
+import android.util.Log;
+
 import com.xixi.sdk.app.LongLakeApplication;
 import com.xixi.sdk.controller.LLNotifier;
 import com.xixi.sdk.utils.file.IoCompletionListener1;
+import com.xixi.sdk.utils.network.LLCallbackAsJsonString;
 import com.xixi.sdk.utils.thread.UIThreadDispatcher;
 
 import java.util.HashMap;
@@ -54,6 +57,7 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
         mLifeMap.put(LongLakeApplication.getInstance().getString(R.string.weather_colder), LongLakeApplication.getInstance().getString(R.string.weather_colder_dress));
         mLifeMap.put(LongLakeApplication.getInstance().getString(R.string.weather_cold), LongLakeApplication.getInstance().getString(R.string.weather_cold_dress));
         mLifeMap.put(LongLakeApplication.getInstance().getString(R.string.weather_frigid), LongLakeApplication.getInstance().getString(R.string.weather_frigid_dress));
+        mLifeMap.put(LongLakeApplication.getInstance().getString(R.string.weather_absence), LongLakeApplication.getInstance().getString(R.string.weather_comfortable_dress));
 
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_sunny), R.mipmap.weather0);
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_nice), R.mipmap.weather0);
@@ -93,6 +97,7 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_tornado), R.mipmap.weather36);
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_cold_low), R.mipmap.weather37);
         mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_hot_low), R.mipmap.weather38);
+        mWeatherMap.put(LongLakeApplication.getInstance().getString(R.string.weather_unknown), R.mipmap.weather38);
     }
 
 
@@ -123,7 +128,7 @@ public class WeatherController extends LLNotifier<XiXiWeatherListener> {
     }
 
     public void getWeather(final IoCompletionListener1<Boolean> weatherData) {
-        GetApiServices.queryWeather(deviceName, DEVICE_TYPE).enqueue(new CallBackWeather<WeatherEntity>() {
+        GetApiServices.queryWeather(deviceName, DEVICE_TYPE).enqueue(new LLCallbackAsJsonString<WeatherEntity>() {
 
             @Override
             public Class<WeatherEntity> _getClass() {

@@ -1,10 +1,7 @@
 package com.xixisdk.xixiweatherutils;
 
-import android.util.ArrayMap;
-
+import com.xixi.sdk.globals.LLSdkGlobals;
 import com.xixi.sdk.utils.network.LLSdkRetrofitUtils;
-
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -12,15 +9,24 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by Administrator on 2019/6/5.
  */
 
-public class GetApiServices extends LLSdkRetrofitUtils {
-   private static Retrofit retrofit = new Retrofit.Builder().baseUrl("http://39.104.111.137/appreg/device/weather/")
-            .addConverterFactory(GsonConverterFactory.create()).build();
+public class GetApiServices extends LLSdkGlobals {
+    private static String mStrBaseUrl;
+
+    static {
+        if (ENABLE_HTTPS) {
+            mStrBaseUrl = "https://39.104.111.137/appreg/device/weather/";
+        } else {
+            mStrBaseUrl = "http://39.104.111.137/appreg/device/weather/";
+        }
+    }
+
+    private static Retrofit retrofit = new Retrofit.Builder().baseUrl(mStrBaseUrl)
+            .addConverterFactory(GsonConverterFactory.create()).client(LLSdkRetrofitUtils.generateClientObject()).build();
 
 
     public static Call<ResponseBody> queryWeather(String deviceName, String deviceType) {
