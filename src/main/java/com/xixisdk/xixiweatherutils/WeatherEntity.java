@@ -1,5 +1,8 @@
 package com.xixisdk.xixiweatherutils;
 
+import android.text.TextUtils;
+
+import com.xixi.sdk.LLSDKUtils;
 import com.xixi.sdk.app.LongLakeApplication;
 import com.xixi.sdk.utils.network.LLRet;
 
@@ -68,7 +71,7 @@ public class WeatherEntity extends LLRet {
         }
 
         public String getTempHigh() {
-            return tempHigh.isEmpty()?LongLakeApplication.getInstance().getString(R.string.weather_temp_high):tempHigh;
+            return TextUtils.isEmpty(tempHigh)?LLSDKUtils.getString(R.string.weather_temp_high):tempHigh;
         }
 
         public void setTempHigh(String tempHigh) {
@@ -76,7 +79,7 @@ public class WeatherEntity extends LLRet {
         }
 
         public String getTempLow() {
-            return tempLow.isEmpty()? LongLakeApplication.getInstance().getString(R.string.weather_temp_low):tempLow;
+            return TextUtils.isEmpty(tempLow)? LLSDKUtils.getString(R.string.weather_temp_low):tempLow;
         }
 
         public void setTempLow(String tempLow) {

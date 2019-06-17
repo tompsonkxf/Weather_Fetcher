@@ -15,17 +15,8 @@ import retrofit2.http.Path;
  */
 
 public class GetApiServices extends LLSdkGlobals {
-    private static String mStrBaseUrl;
 
-    static {
-        if (ENABLE_HTTPS) {
-            mStrBaseUrl = "https://39.104.111.137/appreg/device/weather/";
-        } else {
-            mStrBaseUrl = "http://39.104.111.137/appreg/device/weather/";
-        }
-    }
-
-    private static Retrofit retrofit = new Retrofit.Builder().baseUrl(mStrBaseUrl)
+    private static Retrofit retrofit = new Retrofit.Builder().baseUrl(WEATHER_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(LLSdkRetrofitUtils.generateClientObject()).build();
 
 
