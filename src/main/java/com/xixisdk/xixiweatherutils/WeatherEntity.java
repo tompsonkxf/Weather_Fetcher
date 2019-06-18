@@ -62,12 +62,12 @@ public class WeatherEntity extends LLRet {
          * details : 建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。
          */
 
-        private transient String day;
-        private transient String night;
-        private transient String tempHigh ;
-        private transient String tempLow;
-        private transient String brief;
-        private transient String details;
+        private  String day;
+        private  String night;
+        private  String tempHigh ;
+        private  String tempLow;
+        private  String brief;
+        private  String details;
 
         public String getDay() {
             return day;
