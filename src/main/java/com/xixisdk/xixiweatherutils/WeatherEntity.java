@@ -11,6 +11,11 @@ import com.xixi.sdk.utils.network.LLRet;
  */
 
 public class WeatherEntity extends LLRet {
+    public WeatherEntity(){}
+    public WeatherEntity(String msg, DataBean data) {
+        this.msg = msg;
+        this.data = data;
+    }
 
     /**
      * ret : success
@@ -18,14 +23,14 @@ public class WeatherEntity extends LLRet {
      * data : {"day":"多云","night":"多云","tempHigh":"25","tempLow":"18","brief":"舒适","details":"建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。"}
      */
 
-    private Object msg;
+    private String msg;
     private DataBean data;
 
-    public Object getMsg() {
+    public String getMsg() {
         return msg;
     }
 
-    public void setMsg(Object msg) {
+    public void setMsg(String msg) {
         this.msg = msg;
     }
 
@@ -38,6 +43,16 @@ public class WeatherEntity extends LLRet {
     }
 
     public static class DataBean {
+
+        public DataBean(String day, String night, String tempHigh, String tempLow, String brief, String details) {
+            this.day = day;
+            this.night = night;
+            this.tempHigh = tempHigh;
+            this.tempLow = tempLow;
+            this.brief = brief;
+            this.details = details;
+        }
+
         /**
          * day : 多云
          * night : 多云
@@ -47,12 +62,12 @@ public class WeatherEntity extends LLRet {
          * details : 建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。
          */
 
-        private String day;
-        private String night;
-        private String tempHigh;
-        private String tempLow;
-        private String brief;
-        private String details;
+        private transient String day;
+        private transient String night;
+        private transient String tempHigh ;
+        private transient String tempLow;
+        private transient String brief;
+        private transient String details;
 
         public String getDay() {
             return day;
