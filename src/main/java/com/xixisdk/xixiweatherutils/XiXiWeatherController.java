@@ -37,10 +37,11 @@ public class XiXiWeatherController extends LLNotifier<XiXiWeatherListener> {
                     if (data) {
                         notifyOb(new Object[]{mWeatherData});
                     }
+
+                    UIThreadDispatcher.dispatch(WEATHER_DATA_RUNNABLE, RUNNABLE_TIMER);
                 }
             });
 
-            UIThreadDispatcher.dispatch(WEATHER_DATA_RUNNABLE, RUNNABLE_TIMER);
         }
     };
 
