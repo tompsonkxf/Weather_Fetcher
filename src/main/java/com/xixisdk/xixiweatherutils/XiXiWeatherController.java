@@ -3,8 +3,10 @@ package com.xixisdk.xixiweatherutils;
 import com.xixi.sdk.LLSDKUtils;
 import com.xixi.sdk.app.LongLakeApplication;
 import com.xixi.sdk.controller.LLNotifier;
+import com.xixi.sdk.globals.XiXiDeviceType;
 import com.xixi.sdk.parser.LLGsonUtils;
 import com.xixi.sdk.utils.file.IoCompletionListener1;
+import com.xixi.sdk.utils.file.IoCompletionListener3;
 import com.xixi.sdk.utils.file.LLCacheUtils;
 import com.xixi.sdk.utils.network.LLCallbackAsJsonString;
 import com.xixi.sdk.utils.thread.UIThreadDispatcher;
@@ -28,7 +30,7 @@ public class XiXiWeatherController extends LLNotifier<XiXiWeatherListener> {
 
     private static XiXiWeatherController instance;
     private final static int RUNNABLE_TIMER = 30 * 60000;
-    private final Runnable WEATHER_DATA_RUNNABLE = new Runnable() {
+    private final Runnable WEATHER_DATA_RUNNABLE = new Runnable(){
         @Override
         public void run() {
             getWeather(new IoCompletionListener1<Boolean>() {
@@ -40,7 +42,7 @@ public class XiXiWeatherController extends LLNotifier<XiXiWeatherListener> {
 
                     UIThreadDispatcher.dispatch(WEATHER_DATA_RUNNABLE, RUNNABLE_TIMER);
                 }
-            });
+            },XiXiDeviceType.DEVICE_TYPE_UNIT);
 
         }
     };
@@ -49,17 +51,15 @@ public class XiXiWeatherController extends LLNotifier<XiXiWeatherListener> {
     protected boolean dispatchedInMainThread() {
         return true;
     }
-
     private XiXiWeatherController() {
-        WeatherEntity weatherInfo = (WeatherEntity)LLGsonUtils.fromJson(LLCacheUtils.readFromFileEx(weatherFileName, LongLakeApplication.getInstance()),
+        WeatherEntity weatherInfo = (WeatherEntity)LLGsonUtils.fromJson(LLCacheUtils.readFromFileSynch(weatherFileName, LongLakeApplication.getInstance()),
                 WeatherEntity.class);
         if(weatherInfo == null){
             String strJsonData = LLGsonUtils.getInstance().toJson(defaultWeatherInfo);
-            LLCacheUtils.writeToFileEx(weatherFileName, strJsonData, LongLakeApplication.getInstance());
+            LLCacheUtils.writeToFileSynch(weatherFileName, strJsonData, LongLakeApplication.getInstance());
             weatherInfo = defaultWeatherInfo;
         }
-        mWeatherData=weatherInfo;
-
+        mWeatherData = weatherInfo;
         WEATHER_DATA_RUNNABLE.run();
     }
     private static Map<String, Integer> mWeatherMap = new HashMap<>();
@@ -138,14 +138,13 @@ public class XiXiWeatherController extends LLNotifier<XiXiWeatherListener> {
     }
 
     private static String deviceName;
-    private static final String DEVICE_TYPE = "DU";
 
     public static void setMac(String strMac){
         deviceName=strMac;
     }
 
-    public void getWeather(final IoCompletionListener1<Boolean> weatherData) {
-        GetApiServices.queryWeather(deviceName, DEVICE_TYPE).enqueue(new LLCallbackAsJsonString<WeatherEntity>() {
+    public void getWeather(final IoCompletionListener1<Boolean> weatherData , String deviceType ) {
+        GetApiServices.queryWeather(deviceName, deviceType).enqueue(new LLCallbackAsJsonString<WeatherEntity>() {
 
             @Override
             public Class<WeatherEntity> _getClass() {
@@ -155,7 +154,7 @@ public class XiXiWeatherController extends LLNotifier<XiXiWeatherListener> {
             @Override
             public void onLLResponse(Call arg0, Response arg1, WeatherEntity o) {
                 String strJsonData = LLGsonUtils.getInstance().toJson(o);
-                LLCacheUtils.writeToFileEx(weatherFileName, strJsonData, LongLakeApplication.getInstance());
+                LLCacheUtils.writeToFileSynch(weatherFileName, strJsonData, LongLakeApplication.getInstance());
 
                 mWeatherData=o;
                 weatherData.onFinish(true, getWeatherData());
